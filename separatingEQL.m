@@ -220,21 +220,7 @@ while metric > tol %&& iter < MaxIt
 %     
 end
 
-% % plot the policy function for h0d0
-% figure(1)
-% plot(A,A(dec_h0d0(:,1)),A,A(dec_h0d0(:,2)));% the policy function for employment state
-% legend({'employed policy function','umemployed policy function'},'Location','southeast')
-% xlabel('a') 
-% ylabel('aa')
-% refline(1,0) 
-% 
-% % plot the policy function h1
-% figure(2)
-% plot(A,A(dec_h1(:,1)),A,A(dec_h1(:,2)));% the policy function for employment state
-% legend({'employed policy function','umemployed policy function'},'Location','southeast')
-% xlabel('a') 
-% ylabel('aa')
-% refline(1,0) 
+
 
 %% Law of Motion and Cross-Sectional Distribution
 
@@ -343,7 +329,32 @@ end
       fprintf('The iteration is: %d, the distance is: %.9f.\n',nn,diff(k));
           
 end
+
+% plot the policy function for h0d0
+figure(1)
+plot(A,A(dec_h0d0(:,1)),A,A(dec_h0d0(:,2)));% the policy function for employment state
+legend({'employed policy function','umemployed policy function'},'Location','southeast')
+xlabel('a') 
+ylabel('aa')
+refline(1,0) 
+
+% plot the policy function h1
+figure(2)
+plot(A,A(dec_h1(:,1)),A,A(dec_h1(:,2)));% the policy function for employment state
+legend({'employed policy function','umemployed policy function'},'Location','southeast')
+xlabel('a') 
+ylabel('aa')
+refline(1,0) 
             
-%  end 
+figure(3)
+plot(A,v0_h0(:,1),A,v0_h0(:,2),A,v0_h1(:,1),'--',A,v0_h1(:,2),'--');
+legend({'employed value function No default History',...
+    'umemployed value function No default History',...
+    'employed value function with default History',...
+    'umemployed value function with default History',}...
+    ,'Location','southeast')
+xlabel('a') 
+ylabel('v')
+xlim([-1 Aub ])
 
  

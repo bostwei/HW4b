@@ -84,7 +84,7 @@ aa = repmat(A,1,N);
  
 %----------------- Initial guess for q-------------------
 M = 1600; % the searching grid point
-q0 = linspace(.9,1,M)';%1/(1+r);
+q0 = linspace(0.9,.96,M)';%1/(1+r);
 %----------------- using the grid searching for q-------------------
 diff = zeros(M,1);
 
@@ -353,4 +353,24 @@ Delta  = D/L;
  [min_diff,min_loc] = min(abs(diff));
  optimal_q = q0(min_loc);
  
+%  
+%  %Bisection:
+% min=0.5;max=1; %Outside of the loop
+% 
+% %Inside of the loop:
+% 
+%  
+% excess=(1-D/L)/(1+r)-q;
+%  
+%     if excess>0
+%         min=q;
+%         q=q+(max-q)/2;
+%     else
+%         max=q;
+%         q=q+(min-q)/2;
+%     end
+%     iter=iter+1;
+% end
+%  
+%  
  
