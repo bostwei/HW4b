@@ -58,7 +58,7 @@ inc = (Aub-Alb)/N;
 
 
 % Find the location which is closed to 0
-loc_0 = ceil((0-Alb)/inc)+1;
+loc_0 = ceil((0-Alb)/inc)-1;
 
 
 % generate the possible asset a grid, aa stead for a' grid
@@ -68,7 +68,7 @@ aa = repmat(A,1,N);
 
 %----------------- Initial guess for q-------------------
     neg_a= [ones(loc_0,1);zeros(N-loc_0,1)];
-    q = 0.9520*neg_a + 1/(1+r)*(1-neg_a);
+    q = 0.9573*neg_a + 1/(1+r)*(1-neg_a);
     
 % q = 0.9962;
 
@@ -161,7 +161,7 @@ tol = 0.0001;
 MaxIt = 2000;
 
 % Find the location which is closed to 0
-loc_0 = ceil((0-Alb)/inc)+1;
+loc_0 = ceil((0-Alb)/inc)-1;
 
 %time0 = cputime;
 while metric > tol %&& iter < MaxIt 
@@ -351,3 +351,11 @@ ylabel('v')
 xlim([-1 Aub ])
 % ylim([-4 4])
 
+%% debt to income level.
+% Debt level is the debt amount times the mu
+asset_e = A.* mu_e;
+asset_ue = A.* mu_ue;
+
+debt = sum(asset_e(1:loc_0)) + sum(asset_ue(1:loc_0));
+income = sum(mu_e * y(1) + mu_ue *y(2));
+debt_income = abs(debt/income);

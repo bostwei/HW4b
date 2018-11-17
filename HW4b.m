@@ -59,7 +59,7 @@ inc = (Aub-Alb)/N;
 
 
 % Find the location which is closed to 0
-loc_0 = ceil((0-Alb)/inc)+1;
+loc_0 = ceil((0-Alb)/inc)-1;
 
 
 % generate the possible asset a grid, aa stead for a' grid
@@ -168,7 +168,7 @@ tol = 0.0001;
 MaxIt = 2000;
 
 % Find the location which is closed to 0
-loc_0 = ceil((0-Alb)/inc)+1;
+loc_0 = ceil((0-Alb)/inc)-1;
 
 %time0 = cputime;
 while metric > tol %&& iter < MaxIt 
@@ -353,24 +353,4 @@ Delta  = D/L;
  [min_diff,min_loc] = min(abs(diff));
  optimal_q = q0(min_loc);
  
-%  
-%  %Bisection:
-% min=0.5;max=1; %Outside of the loop
-% 
-% %Inside of the loop:
-% 
-%  
-% excess=(1-D/L)/(1+r)-q;
-%  
-%     if excess>0
-%         min=q;
-%         q=q+(max-q)/2;
-%     else
-%         max=q;
-%         q=q+(min-q)/2;
-%     end
-%     iter=iter+1;
-% end
-%  
-%  
  

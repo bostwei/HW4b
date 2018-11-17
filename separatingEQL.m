@@ -357,4 +357,15 @@ xlabel('a')
 ylabel('v')
 xlim([-1 Aub ])
 
- 
+%% debt to income level.
+% Debt level is the debt amount times the mu
+mu = mu_h0+mu_h1;
+mu_e = mu(1:N);
+mu_ue = mu_h0(N+1:2*N);
+
+asset_e = A.* mu_e;
+asset_ue = A.* mu_ue;
+
+debt = sum(asset_e(1:loc_0)) + sum(asset_ue(1:loc_0));
+income = sum(mu_e * y(1) + mu_ue *y(2));
+debt_income = abs(debt/income); 
