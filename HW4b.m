@@ -324,20 +324,25 @@ while test> 10^(-8) && Itrate <= MaxIt
 end
 mu = mu_h0+mu_h1;
 mu_e = mu(1:N);
-mu_ue = mu_h0(N+1:2*N);
+mu_ue = mu(N+1:2*N);
 
 %% Check the market clearing condition 
 %-------------The lost rate D -------------
 
-% 
-mu_d = trans_h0*mu_h0.*d;
-D = [A;A]'*mu_d;
 
 % generatet the borrowing amount L
 borrow = [ones(loc_0,1);zeros(N-loc_0,1)];
-d_borrow = [borrow;borrow];
-mu_l = d_borrow.*trans_h0*mu_h0;
-L = [A;A]'*mu_l;
+d_borrow = [borrow;borrow];% the decesion of borrowing
+
+
+mu_h0_e = g_h0e'*mu_h0(1:N); % measure of the employed people choosing asset after a one period of time
+mu_h0_ue = g_h0ue'*mu_h0(N+1:2*N);% measure of the unemployed people choosing asset after a one period of time
+L = A'*(mu_h0_e.*borrow) + A'*(mu_h0_ue.*borrow);
+
+
+% 
+mu_d = (trans_h0*mu_h0).*d;
+D = [A;A]'*mu_d;
 
 
 Delta  = D/L;

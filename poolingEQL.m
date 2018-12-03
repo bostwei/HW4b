@@ -68,7 +68,7 @@ aa = repmat(A,1,N);
 
 %----------------- Initial guess for q-------------------
     neg_a= [ones(loc_0,1);zeros(N-loc_0,1)];
-    q = 0.9573*neg_a + 1/(1+r)*(1-neg_a);
+    q = 0.8179*neg_a + 1/(1+r)*(1-neg_a);
     
 % q = 0.9962;
 
@@ -359,3 +359,38 @@ asset_ue = A.* mu_ue;
 debt = sum(asset_e(1:loc_0)) + sum(asset_ue(1:loc_0));
 income = sum(mu_e * y(1) + mu_ue *y(2));
 debt_income = abs(debt/income);
+
+%% The default decision
+% plot the value function
+default_rand = 0.015*normrnd(0,1,N,2) + default;
+figure(4)
+plot(A,default_rand(:,1),'o',A,default_rand(:,2),'o');
+legend({'employed default decision',...
+    'umemployed default decision'}...
+    ,'Location','northeast')
+xlabel('a') 
+ylabel('default')
+xlim([-1 Aub ])
+
+%% Plot the measurement distribution
+figure(5)
+bar(A,mu_e);
+hold on 
+bar(A,mu_ue);
+legend({'employed population',...
+    'umemployed population'}...
+    ,'Location','northeast')
+xlabel('a') 
+ylabel('population')
+xlim([-1 2.5 ])
+title('Pooling Contract Equilibrium Distribution');
+
+%% calculating the statistics
+%- average income
+avg_inc = sum(mu_e) * y(1)  + sum(mu_ue) * y(2);
+
+avg_saving = sum(asset_e(loc_0:length(A))) + sum(asset_e(loc_0:length(A)));
+
+avg_default = sum(d.*[A;A].*mu);
+
+avg_bondp = q'*(mu_ue+mu_e) / sum(mu_ue+mu_e);

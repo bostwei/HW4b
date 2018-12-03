@@ -45,7 +45,7 @@ A = linspace(Alb,Aub,N)';
 % the increment
 inc = (Aub-Alb)/N;
 % Find the location which is closed to 0
-loc_0 = ceil((0-Alb)/inc)+1;
+loc_0 = ceil((0-Alb)/inc)-1;
 
 % generate the possible asset a grid, aa stead for a' grid
 a = repmat(A,1,N);
@@ -369,3 +369,81 @@ asset_ue = A.* mu_ue;
 debt = sum(asset_e(1:loc_0)) + sum(asset_ue(1:loc_0));
 income = sum(mu_e * y(1) + mu_ue *y(2));
 debt_income = abs(debt/income); 
+
+%% The default decision
+% plot the value function
+default_rand = 0.01*normrnd(0,1,N,2) + default;
+figure(4)
+plot(A,default_rand(:,1),'o',A,default_rand(:,2),'o');
+legend({'employed default decision',...
+    'umemployed default decision'}...
+    ,'Location','northeast')
+xlabel('a') 
+ylabel('default')
+xlim([-1 Aub ])
+
+%% Plot the bond price
+q_rand = 0.005*normrnd(0,1,N,2) + q;
+figure(5)
+plot(A,q_rand(:,1),'o',A,q_rand(:,2),'o');
+legend({'employed bond price',...
+    'umemployed bond price'}...
+    ,'Location','southeast')
+xlabel('a') 
+ylabel('bond price')
+xlim([-1 Aub ])
+
+%% Plot the interest rate
+r_rand = 0.005*normrnd(0,1,N,2) + 1./q - 1 ;
+figure(6)
+plot(A,r_rand(:,1),'o',A,r_rand(:,2),'o');
+legend({'employed interest rate',...
+    'umemployed interest rate'}...
+    ,'Location','southeast')
+xlabel('a') 
+ylabel('Interest Rate')
+xlim([-1 Aub ])
+
+mean(mean(1./q - 1))
+
+%% Plot the measurement distribution
+mu = mu_h0+mu_h1;
+mu_e = mu(1:N);
+mu_ue = mu_h0(N+1:2*N);
+figure(5)
+bar(A,mu_e);
+hold on 
+bar(A,mu_ue);
+legend({'employed population',...
+    'umemployed population'}...
+    ,'Location','northeast')
+xlabel('a') 
+ylabel('population')
+xlim([-1 2.5 ])
+title('Separating Contract Equilibrium Distribution');
+
+%% calculating the statistics
+%- average income
+avg_inc = (sum(mu_e) * y(1)  + sum(mu_ue) * y(2))/sum(mu_ue+mu_e);
+
+avg_saving = sum(asset_e(loc_0:length(A))) + sum(asset_e(loc_0:length(A)));
+
+avg_default = sum(d.*[A;A].*mu);
+
+avg_bondp = q'*(mu_ue+mu_e) / sum(mu_ue+mu_e);
+
+% generatet the borrowing amount L
+borrow = [ones(loc_0,1);zeros(N-loc_0,1)];
+d_borrow = [borrow;borrow];
+mu_l = d_borrow.*trans_h0*mu_h0;
+L = [A;A]'*mu_l;
+
+
+mu = mu_h0+mu_h1;
+mu_e = mu(1:N);
+mu_ue = mu_h0(N+1:2*N);
+
+mu_d = trans_h0*mu_h0.*d;
+D = [A;A]'*mu_d;
+
+Delta  = D/L;
