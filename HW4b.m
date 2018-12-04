@@ -10,7 +10,10 @@
 
 clear all
 clc
+<<<<<<< HEAD
 close all
+=======
+>>>>>>> master
 
 
 
@@ -59,7 +62,11 @@ inc = (Aub-Alb)/N;
 
 
 % Find the location which is closed to 0
+<<<<<<< HEAD
 loc_0 = ceil((0-Alb)/inc)-1;
+=======
+loc_0 = ceil((0-Alb)/inc)+1;
+>>>>>>> master
 
 
 % generate the possible asset a grid, aa stead for a' grid
@@ -84,7 +91,11 @@ aa = repmat(A,1,N);
  
 %----------------- Initial guess for q-------------------
 M = 1600; % the searching grid point
+<<<<<<< HEAD
 q0 = linspace(0.9,.96,M)';%1/(1+r);
+=======
+q0 = linspace(.9,1,M)';%1/(1+r);
+>>>>>>> master
 %----------------- using the grid searching for q-------------------
 diff = zeros(M,1);
 
@@ -168,7 +179,11 @@ tol = 0.0001;
 MaxIt = 2000;
 
 % Find the location which is closed to 0
+<<<<<<< HEAD
 loc_0 = ceil((0-Alb)/inc)-1;
+=======
+loc_0 = ceil((0-Alb)/inc)+1;
+>>>>>>> master
 
 %time0 = cputime;
 while metric > tol %&& iter < MaxIt 
@@ -324,11 +339,16 @@ while test> 10^(-8) && Itrate <= MaxIt
 end
 mu = mu_h0+mu_h1;
 mu_e = mu(1:N);
+<<<<<<< HEAD
 mu_ue = mu(N+1:2*N);
+=======
+mu_ue = mu_h0(N+1:2*N);
+>>>>>>> master
 
 %% Check the market clearing condition 
 %-------------The lost rate D -------------
 
+<<<<<<< HEAD
 
 % generatet the borrowing amount L
 borrow = [ones(loc_0,1);zeros(N-loc_0,1)];
@@ -343,6 +363,17 @@ L = A'*(mu_h0_e.*borrow) + A'*(mu_h0_ue.*borrow);
 % 
 mu_d = (trans_h0*mu_h0).*d;
 D = [A;A]'*mu_d;
+=======
+% 
+mu_d = trans_h0*mu_h0.*d;
+D = [A;A]'*mu_d;
+
+% generatet the borrowing amount L
+borrow = [ones(loc_0,1);zeros(N-loc_0,1)];
+d_borrow = [borrow;borrow];
+mu_l = d_borrow.*trans_h0*mu_h0;
+L = [A;A]'*mu_l;
+>>>>>>> master
 
 
 Delta  = D/L;

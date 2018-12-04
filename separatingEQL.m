@@ -45,7 +45,11 @@ A = linspace(Alb,Aub,N)';
 % the increment
 inc = (Aub-Alb)/N;
 % Find the location which is closed to 0
+<<<<<<< HEAD
 loc_0 = ceil((0-Alb)/inc)-1;
+=======
+loc_0 = ceil((0-Alb)/inc)+1;
+>>>>>>> master
 
 % generate the possible asset a grid, aa stead for a' grid
 a = repmat(A,1,N);
@@ -220,7 +224,25 @@ while metric > tol %&& iter < MaxIt
 %     
 end
 
+<<<<<<< HEAD
 
+=======
+% % plot the policy function for h0d0
+% figure(1)
+% plot(A,A(dec_h0d0(:,1)),A,A(dec_h0d0(:,2)));% the policy function for employment state
+% legend({'employed policy function','umemployed policy function'},'Location','southeast')
+% xlabel('a') 
+% ylabel('aa')
+% refline(1,0) 
+% 
+% % plot the policy function h1
+% figure(2)
+% plot(A,A(dec_h1(:,1)),A,A(dec_h1(:,2)));% the policy function for employment state
+% legend({'employed policy function','umemployed policy function'},'Location','southeast')
+% xlabel('a') 
+% ylabel('aa')
+% refline(1,0) 
+>>>>>>> master
 
 %% Law of Motion and Cross-Sectional Distribution
 
@@ -329,6 +351,7 @@ end
       fprintf('The iteration is: %d, the distance is: %.9f.\n',nn,diff(k));
           
 end
+<<<<<<< HEAD
 
 % plot the policy function for h0d0
 figure(1)
@@ -452,3 +475,9 @@ Delta  = D/L;
 v1_h0_sep = v1_h0;
 v1_h1_sep = v1_h1;
 save('separating.mat','v1_h0_sep','v1_h1_sep')
+=======
+            
+%  end 
+
+ 
+>>>>>>> master
