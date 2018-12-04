@@ -394,3 +394,24 @@ avg_saving = sum(asset_e(loc_0:length(A))) + sum(asset_e(loc_0:length(A)));
 avg_default = sum(d.*[A;A].*mu);
 
 avg_bondp = q'*(mu_ue+mu_e) / sum(mu_ue+mu_e);
+
+%% %% wealth of each (s,a)
+
+load('separating.mat')
+
+lambda_v1_h1 = ((v1_h1_sep + 1/((1-alpha)*(1-beta)))./(v1_h1 + 1/((1-alpha)*(1-beta)))).^(1/(1-alpha)) - 1;
+
+lambda_v1_h0 = ((v1_h0_sep + 1/((1-alpha)*(1-beta)))./(v1_h0 + 1/((1-alpha)*(1-beta)))).^(1/(1-alpha)) - 1;
+
+figure(6)
+plot(A,lambda_v1_h1(:,1),A,lambda_v1_h1(:,2));
+hold on
+plot(A,lambda_v1_h0(:,1),A,lambda_v1_h0(:,2));
+legend({'Employed Default History', 'Unemployed Default History'...
+    'Employed No Default history', 'Unemployed No Default History'}...
+    ,'Location','northeast')
+xlabel('a') 
+ylabel('Comsumption Equivalence')
+ylim([-.005 .02 ])
+xlim([Alb,Aub])
+title('Consumption Equivalence for different group of agent');

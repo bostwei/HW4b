@@ -447,3 +447,8 @@ mu_d = trans_h0*mu_h0.*d;
 D = [A;A]'*mu_d;
 
 Delta  = D/L;
+
+%% wealth of each (s,a)
+v1_h0_sep = v1_h0;
+v1_h1_sep = v1_h1;
+save('separating.mat','v1_h0_sep','v1_h1_sep')
